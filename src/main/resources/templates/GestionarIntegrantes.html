@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gestionar Integrantes</title>
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+	<link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+
+	<!-- Style CSS -->
+	<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+</head>
+
+
+<body>
+
+
+
+	<!--  NavBar -->
+
+	<nav class="navbar-expand-lg  nav navbar nav-pills flex-column flex-sm-row  nav-link navbar-dark"
+		style="background-color: #3b3b3b;">
+		<div class="container-fluid">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+				aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<img th:src="@{/assets/logo.jpg}" style="width: 40px; height: auto; margin-right: 1%;"
+				class="rounded float-start rounded-circle" alt="">
+			<a class="navbar-brand navbar-text fw-light" th:href="@{/home}">
+				Fundacion Roca De Sion
+			</a>
+
+			<div class=" collapse navbar-collapse fw-light" id="navbarTogglerDemo01">
+
+				<div class="dropdown nav-item" sec:authorize="isAuthenticated()">
+					<a class="nav-link dropdown-toggle navbar-text fw-light" href="#" role="button"
+						id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+						ADMINISTRAR
+					</a>
+
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<li><a class="dropdown-item" th:href="@{/listarAsistencias}">Gestionar Asistencias </a></li>
+						<li><a class="dropdown-item" th:href="@{/listar}">Gestionar Integrantes</a></li>
+						<li><a class="dropdown-item" th:href="@{/listarEvento}">Gestionar Eventos</a></li>
+
+					</ul>
+				</div>
+
+				<li class="nav-item flex-sm-fill text-sm-center" sec:authorize="isAuthenticated()">
+					<a class="nav-link navbar-text" aria-current="page" th:href="@{/new}"> REGISTRAR INTEGRANTES</a>
+				</li>
+
+				<li class="nav-item flex-sm-fill text-sm-center">
+					<a class="nav-link navbar-text" aria-current="page" th:href="@{/CrearEvento}">CREAR EVENTO</a>
+				</li>
+
+				<li class="nav-item flex-sm-fill text-sm-center">
+					<a class="nav-link navbar-text" aria-current="page" th:href="@{/Guia}">GUIA DE USO</a>
+				</li>
+
+				<a class="navbar-brand navbar-text fw-light" th:href="@{/login}" sec:authorize="!isAuthenticated()">
+					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" fill="currentColor"
+						class="bi bi-person-circle" viewBox="0 0 16 16">
+						<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+						<path fill-rule="evenodd"
+							d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+					</svg>
+
+					Iniciar seccion
+
+				</a>
+
+
+
+				<div class="dropdown nav-item navbar-text fw-light p-0" sec:authorize="isAuthenticated()">
+
+					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" fill="currentColor"
+						class="bi bi-person-circle" viewBox="0 0 16 16">
+						<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+						<path fill-rule="evenodd"
+							d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+					</svg>
+
+					<a class="nav-link dropdown-toggle navbar-text fw-light" href="#" role="button"
+						id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" sec:authentication="name">
+						Opciones
+					</a>
+
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<form th:action="@{/logout}" method="post">
+							<input class="dropdown-item" type="submit" value="cerrar sesion"></input>
+						</form>
+
+					</ul>
+
+				</div>
+
+
+			</div>
+		</div>
+
+	</nav>
+
+
+	<!--- barra de navegacion   -->
+
+
+
+	<!--- barra de navegacion   -->
+
+	<div class="jumbotron container-fluid p-5" style="background-color: #fff4e1;">
+		<h1 class="display-4">Descripción</h1>
+		<p class="lead fw-light lh-base">En este apartado el usuario podrá gestionar todos los datos ingresado en el formulario de
+			ingreso con los respectivos, seguidamente el usuario podrá editar y eliminar los datos de los miembros de
+			la fundación en su defecto si algún integrante no hace parte ya de la fundación, se podrá eliminar ese
+			integrante sin ningún problema, cabe resaltar que la información No se podrá recuperar una vez se haya
+			eliminado ,<spam class="fw-bold"> para mas informacion dirigirse a la Guia </spam></p>
+		<hr class="my-4">
+
+		<div class="text-start d-grid gap-2 col-2">
+			<a class="btn btn-secondary rounded text-uppercase fw-light" aria-current="page" th:href="@{/Guia}">Guia</a>
+		</div>
+
+
+	</div>
+
+	<!--- formulario  -->
+
+	<H1 class="text-center text-uppercase text-uppercases p-5">Registro De Integrantes</H1>
+
+
+
+	<div class="container-fluid p-5">
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>NOMBRE </th>
+					<th>APELLIDO </th>
+					<th>EMAIL</th>
+					<th>TELEFONO</th>
+					<th>DIRECCION</th>
+				</tr>
+			</thead>
+			<tbody>
+			<tbody>
+				<tr th:each="integrante:${integrantes}">
+					<td th:text="${integrante.id}"></td>
+					<td th:text="${integrante.name}"></td>
+					<td th:text="${integrante.lastname}"></td>
+					<td th:text="${integrante.email}"></td>
+					<td th:text="${integrante.phone}"></td>
+					<td th:text="${integrante.addres}"></td>
+					<td>
+						<a th:href="@{/editar/}+${integrante.id}" class="btn btn-warning">Editar</a>
+						<a th:href="@{/form/}+${integrante.id}" class="btn btn-success">Registrar Asistencia </a>
+						<a th:href="@{/eliminar/}+${integrante.id}" class="btn btn-danger">Eliminar integrante</a>
+
+
+					</td>
+				</tr>
+			</tbody>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!--- footer  -->
+
+	<footer class="footer-14398 " style="background-color: #3b3b3b;">
+
+		<div class="container align-items-center">
+			<div class="row mb-5">
+				<div class="col-md-3">
+					<a href="#" class="footer-site-logo">Fundacion Roca De Sion </a>
+
+				</div>
+				<div class="col-md-2 ml-auto">
+					<h3>NUMERO DE CONTACTO</h3>
+					<ul class="list-unstyled links">
+						<li>
+							<a href="#"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="40px"
+									height="40px" fill-rule="evenodd" clip-rule="evenodd">
+									<path fill="#fff"
+										d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z" />
+									<path fill="#fff"
+										d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z" />
+									<path fill="#cfd8dc"
+										d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z" />
+									<path fill="#40c351"
+										d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z" />
+									<path fill="#fff" fill-rule="evenodd"
+										d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z"
+										clip-rule="evenodd" />
+								</svg>
+							</a>
+						</li>
+						<li><a href="#">Numero de Contacto</a></li>
+						<li><a href="#">310-8780-765</a></li>
+
+					</ul>
+				</div>
+				<div class="col-md-2 ml-auto">
+					<h3>DONACIONES</h3>
+					<ul class="list-unstyled links">
+						<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="30"
+									viewBox="4.86 5.41 559.65 132.36" width="100">
+									<path
+										d="m32.44 30.19c.73-.6 1.47-1.19 2.2-1.79.58-.03 1.14-.07 1.06-.89l-.05.06c9.45-3.76 18.12-9.03 26.92-14.04l1.25-.03c12.32 5.87 24.91 11.09 37.68 15.88.56.39 1.13.77 1.69 1.16 6.99 8.99 14.48 17.54 22.09 26l.15.94c-3.9 11.81-6.79 23.9-9.78 35.97-.32.6-.63 1.19-.95 1.79-9.47 10.39-18.95 20.78-28.42 31.17-.6-.24-1.23-.44-1.8-.73-13.33-6.92-26.65-13.85-39.97-20.78-.66-.5-1.31-1-1.97-1.5-.03-.64-.31-1.04-1.01-1.03l.04.04c-.07-1.63-1.34-2.6-2.16-3.8-8.81-12.97-18.64-25.22-26.87-38.59 2.13-3.13 4.34-6.2 6.36-9.4 4.36-6.91 10.16-12.87 13.54-20.43z"
+										fill="#231c46" />
+									<path
+										d="m432.54 73.12c.15 9.56-2.87 18.01-9.04 25.22-1.82 2.13-1.68 3.33.31 5.1 2.48 2.2 4.77 4.64 6.94 7.16 1.89 2.2 1.3 3.69-1.72 3.73-5.1.08-10.5.99-13.88-4.41-1.47-2.36-3.14-1.42-5.06-.46-19.26 9.59-40.71 4.05-52.74-13.55-11.29-16.52-8.58-40.9 6.14-55.34 13.9-13.64 35.39-15.46 51.1-3.98 12.28 8.98 17.81 21.5 17.95 36.53zm-26.96 25.16c-4.94-4.44-9.3-8.3-13.59-12.24-1.11-1.02-2.05-2.3-1.24-3.97.77-1.59 2.24-1.6 3.79-1.77 4.65-.51 8.38.67 11.38 4.54 2.02 2.6 4.65 4.73 7.01 7.06 10.33-10.56 10.29-29.61-.07-41.36-9.79-11.1-26.59-12.99-38.38-4.31-12.41 9.13-15.99 29.55-7.51 42.74 8.24 12.8 24 17.13 38.61 9.31zm-172.25-10.37c0-18.85.16-36.17-.11-53.49-.07-4.77 1.88-5.48 5.94-5.36 3.89.11 6.5.08 6.44 5.42-.27 24.81-.11 49.63-.14 74.44 0 1.9.7 4.26-1.76 5.22-2.51.98-3.98-.88-5.44-2.52-15.3-17.14-30.61-34.28-45.92-51.42-1.51-1.69-3.06-3.35-4.69-5.13-1.47 1.87-.84 3.58-.84 5.14-.03 15.99-.12 31.98.14 47.96.07 4.65-1.09 6.46-6.11 6.35-4.63-.11-6.44-1.11-6.39-6.15.24-24.48.09-48.96.14-73.44 0-2.01-.96-4.69 1.91-5.57 2.77-.85 4.99.19 7 2.46 14.53 16.49 29.16 32.89 43.76 49.32 1.72 1.95 3.47 3.87 6.07 6.77z"
+										fill="#251d48" />
+									<path
+										d="m459.81 60.17c0-8.82.24-17.66-.09-26.47-.21-5.59 3.41-4.43 6.6-4.59 3.48-.18 6.06-.05 6.01 4.79-.19 17.14-.28 34.3.13 51.44.32 13.34 13.74 21.01 25.3 14.87 5.03-2.67 8-6.89 8.68-12.59 1.31-10.95.4-21.95.61-32.93.13-6.99.17-13.99-.03-20.97-.1-3.39.88-4.69 4.48-4.67 7.86.05 7.87-.14 7.86 7.89-.01 15.48.11 30.97-.09 46.45-.2 15.72-9.61 27.24-24.4 30.36-16.01 3.37-33.12-8.78-34.42-25.14-.75-9.42-.14-18.96-.14-28.44-.16.01-.33.01-.5 0z"
+										fill="#2a1f4b" />
+									<path
+										d="m278.2 71.78c-.01-12.48.1-24.97-.07-37.45-.05-3.67.68-5.37 4.91-5.26 11.82.28 23.65.31 35.46 0 4.89-.13 4.91 2.47 4.9 5.95-.01 3.58.13 6.61-5.05 6.4-7.98-.32-15.98.05-23.97-.14-2.93-.07-4.16.5-3.96 3.76.3 4.98.26 9.99.01 14.97-.15 2.97.97 3.56 3.69 3.5 7.82-.16 15.66.21 23.47-.14 4.8-.22 6 1.63 5.88 6.09-.11 4.07-.43 6.56-5.62 6.27-7.97-.45-15.98-.02-23.97-.17-2.58-.05-3.51.65-3.44 3.33.17 6.65.22 13.32-.01 19.97-.11 3.1 1.23 3.47 3.82 3.43 8.16-.13 16.32.17 24.47-.13 4.52-.17 4.81 2.24 4.66 5.6-.15 3.28.77 6.8-4.7 6.69-11.98-.24-23.98-.18-35.96-.01-3.58.05-4.59-1.32-4.56-4.69.13-12.67.05-25.32.04-37.97z"
+										fill="#251d48" />
+									<path
+										d="m551.91 71.4c.01-12.49.24-24.98-.1-37.46-.16-5.84 3.49-4.7 6.86-4.88 3.64-.2 5.82.29 5.78 5.01-.22 25.14-.23 50.28.01 75.42.05 4.83-2.3 5-5.85 4.92-3.58-.08-6.95.59-6.81-5.05.32-12.65.11-25.31.11-37.96z"
+										fill="#231c46" />
+									<path
+										d="m12.54 60.02c8.23 13.37 18.07 25.62 26.88 38.58.82 1.21 2.09 2.17 2.16 3.8-10.56-4.22-20.89-9.07-29.89-16.01-6.03-4.65-6.83-14.58-2.95-21.37.98-1.72 2.18-3.31 3.28-4.96.17-.01.34-.02.52-.04z"
+										fill="#40bacd" />
+									<path
+										d="m44.52 104.9c13.32 6.93 26.64 13.86 39.97 20.78.57.3 1.2.49 1.8.73.05.23.08.45.1.68-2.08 2.11-4.07 4.33-6.27 6.32-4.68 4.24-12.23 4.36-16.03-.56-6.96-8.99-13.91-18.03-19.57-27.95z"
+										fill="#e73b7b" />
+									<path
+										d="m86.38 127.1c-.01-.23-.05-.46-.1-.68 9.47-10.39 18.94-20.78 28.42-31.17-1.61 9.43-4.32 18.59-7.18 27.68-2.07 6.58-8.72 9.24-15.3 6.85-2-.74-3.89-1.78-5.84-2.68z"
+										fill="#40bacd" />
+									<path
+										d="m101.51 29.39c-12.78-4.79-25.37-10.01-37.69-15.88 3.37-2.77 7.39-4.39 11.24-6.27 3.74-1.83 7.19-.86 9.85 2.28 5.58 6.58 11.07 13.24 16.6 19.87zm14.14 64.07c2.99-12.06 5.88-24.15 9.78-35.97 2.79 1.9 4.64 4.71 6.57 7.34 2.61 3.57 2.61 7.58-.35 10.99-5.21 5.99-10.65 11.77-16 17.64zm-103.11-33.44c-.17.01-.35.03-.52.04-3.56-11.97-.75-18.83 10.23-24.72 3.35-1.8 6.79-3.44 10.19-5.15-3.38 7.56-9.18 13.52-13.54 20.43-2.02 3.2-4.24 6.27-6.36 9.4z"
+										fill="#e73b7b" />
+									<g fill="#40bacd">
+										<path
+											d="m125.29 56.55c-7.61-8.46-15.1-17.01-22.09-26 5.97 2.44 11.99 4.79 17.91 7.35 5.6 2.42 7.47 6.18 6.15 12-.52 2.24-1.31 4.43-1.97 6.65zm-62.72-43.01c-8.8 5.01-17.47 10.28-26.92 14.04 2.64-5.88 6.76-10.79 10.76-15.71 2.04-2.5 5.28-3.24 8.56-1.76 2.54 1.15 5.07 2.29 7.6 3.43z" />
+										<path
+											d="m35.7 27.52c.09.82-.48.86-1.06.89.08-.63.41-.94 1.06-.89zm5.84 74.85c.69 0 .98.39 1.01 1.03-.61-.08-1.1-.27-1.01-1.03z" />
+									</g>
+								</svg></a>
+						</li>
+						<li><a href="#">Numero de cuenta</a></li>
+						<li><a href="#">000-0000-000</a></li>
+						<li><a href="#">Realizar Donacion </a></li>
+					</ul>
+				</div>
+				<div class="col-md-2 ml-auto">
+					<h3>OTROS MEDIOS DE CONTACTO</h3>
+					<ul class="list-unstyled links">
+						<li><a href="#">Contacto</a></li>
+						<li><a href="#">3108780765</a></li>
+						<li><a href="#">Tel-Fijo</a></li>
+						<li><a href="#">4895867</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="row mb-4">
+				<div class="col-12 pb-4">
+					<div class="line"></div>
+				</div>
+				<div class="col-md-6 text-md-left">
+					<ul class="list-unstyled link-menu nav-left">
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Terms &amp; Conditions</a></li>
+						<li><a href="#">Code of Conduct</a></li>
+					</ul>
+				</div>
+				<div class="col-md-6 text-md-right">
+					<ul class="list-unstyled social nav-right">
+						<li><a th:href="@{https://es-la.facebook.com/fundacionrocadesionp}">Fundaciòn La Roca de Siòn
+								<span class="icon-facebook"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
+										width="48px" height="48px">
+										<linearGradient id="awSgIinfw5_FS5MLHI~A9a" x1="6.228" x2="42.077" y1="4.896"
+											y2="43.432" gradientUnits="userSpaceOnUse">
+											<stop offset="0" stop-color="#0d61a9" />
+											<stop offset="1" stop-color="#16528c" />
+										</linearGradient>
+										<path fill="url(#awSgIinfw5_FS5MLHI~A9a)"
+											d="M42,40c0,1.105-0.895,2-2,2H8c-1.105,0-2-0.895-2-2V8c0-1.105,0.895-2,2-2h32 c1.105,0,2,0.895,2,2V40z" />
+										<path
+											d="M25,38V27h-4v-6h4v-2.138c0-5.042,2.666-7.818,7.505-7.818c1.995,0,3.077,0.14,3.598,0.208 l0.858,0.111L37,12.224L37,17h-3.635C32.237,17,32,18.378,32,19.535V21h4.723l-0.928,6H32v11H25z"
+											opacity=".05" />
+										<path
+											d="M25.5,37.5v-11h-4v-5h4v-2.638c0-4.788,2.422-7.318,7.005-7.318c1.971,0,3.03,0.138,3.54,0.204 l0.436,0.057l0.02,0.442V16.5h-3.135c-1.623,0-1.865,1.901-1.865,3.035V21.5h4.64l-0.773,5H31.5v11H25.5z"
+											opacity=".07" />
+										<path fill="#fff"
+											d="M33.365,16H36v-3.754c-0.492-0.064-1.531-0.203-3.495-0.203c-4.101,0-6.505,2.08-6.505,6.819V22h-4v4 h4v11h5V26h3.938l0.618-4H31v-2.465C31,17.661,31.612,16,33.365,16z" />
+									</svg> </span>
+
+							</a></li>
+						<li><a href="#"><span class="icon-pinterest"></span></a></li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+
+		</div>
+
+		<!-- JavaScript Bundle with Popper -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+			crossorigin="anonymous"></script>
+
+	</footer>
+
+
+
+</body>
+
+</html>

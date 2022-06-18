@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+
+<!-- Style CSS -->
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+<head>
+	<title>Spring Security Example </title>
+</head>
+
+
+<body class="text-center p-3">
+
+	<div class="container m-t-5 w-100">
+		<div class="position-absolute top-50 start-50 translate-middle shadow p-5 mb-5 bg-body rounded">
+
+
+			<h1 class="h3 mb-3 fw-normal"> Ingrese las credenciales </h1>
+
+			<form th:action="@{/login}" method="post">
+
+				<div class="mb-3">
+					<label for="exampleInputEmail1" class="form-label">Usuario</label>
+					<input type="text" name="username" class="form-control" id="exampleInputEmail1"
+						aria-describedby="emailHelp">
+
+				</div>
+
+				<div class="mb-3">
+					<label for="exampleInputPassword1" class="form-label">Contraseña </label>
+					<input type="password" name="password" class="form-control" id="exampleInputPassword1">
+				</div>
+
+				<div class="mb-3">
+					<input class="w-100 btn btn-lg btn-primary" type="submit" value="Ingresar" />
+				</div>
+
+
+			</form>
+
+			<div th:if="${param.error}" class="form-text">
+				Nombre o Contrsena ivalidos , vuelva a intentar.
+			</div>
+			<div th:if="${param.logout}" class="form-text">
+				You have been logged out.
+			</div>
+
+		</div>
+
+		<div class="alert alert-success" role="alert">
+			<h4 class="alert-heading">Advertencia!</h4>
+			<p>Iniciar seccion solo esta disponible para el Administrador Si usted no es administrador por favor .</p>
+				<a th:href="@{/home}" class="alert-link">Volver a la pagina de Inicio </a>.
+			<hr>
+			<p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+		</div>
+
+	</div>
+	
+		
+	
+</body>
+
+</html>
